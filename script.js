@@ -1,42 +1,48 @@
-//your code here
-var addButton = document.getElementById('add');
-var itemName = document.getElementById('item-name-input')
-var itemPrice = document.getElementById('item-price-input')
-var table = document.getElementById('table')
-var sum = document.getElementById('sum')
 
-addButton.innerText = 'Add';
 
-function addToTable(){
-    // 1. get the values entered by a user
-    var userDataName = itemName.value;
-    var userDataPrice = itemPrice.value;
-    
-    // 2. check whether values are entered or not
-    if(userDataName != '' && userDataPrice != '' ){
-
-        // 3. Create a new Row at the top
-        var row = table.insertRow(0);
-
-        // 4. Create the cells
-        var td1 = row.insertCell(0);
-        var td2 = row.insertCell(1);
-
-        // Set attribute "ID" as per te question
-        td1.setAttribute("id", "item");
-        td2.setAttribute("id", "price");
-
-        // 5. put the values inside the empty cells
-        td1.innerText = userDataName;
-        td2.innerText = userDataPrice;
-
-        // 6. print the grand total
-        sum.innerText =  Number(sum.innerText) + Number(td2.innerText);
-
-        // 7. Clear the text field
-        itemName.value = '' ;
-        itemPrice.value = '' ;
-    }
-}
-
-addButton.onclick = addToTable;
+var itemName = document.getElementById("item-name-input");
+var itemQuantity = document.getElementById("item-qty-input");
+var itemPrice = document.getElementById("item-price-input");
+ 
+var tbody = document.querySelector("tbody");
+ 
+var grandTotal = document.getElementById("total");
+var grand_total = 0;
+ 
+var addItem = document.querySelector("#add");
+ 
+addItem.addEventListener("click", (event) => {
+  event.preventDefault();
+ 
+  let newRow = document.createElement("tr");
+ 
+  let name = document.createElement("td");
+  name.innerText = itemName.value;
+  name.classList.add("item");
+  newRow.append(name);
+ 
+  let price = document.createElement("td");
+  price.innerText = itemPrice.value;
+  newRow.append(price);
+  price.classList.add("price");
+ 
+  let quantity = document.createElement("td");
+  quantity.innerText = itemQuantity.value;
+  newRow.append(quantity);
+ 
+  if (itemName.value && itemQuantity.value && itemPrice.value) {
+    let total = document.createElement("td");
+    total.innerText = itemPrice.value * itemQuantity.value;
+    newRow.append(total);
+ 
+    tbody.append(newRow);
+ 
+    grand_total += Number(total.innerText);
+    grandTotal.innerHTML = "Grand Total: ₹ " + grand_total;
+  }
+ 
+  itemName.value = "";
+  itemQuantity.value = "";
+  itemPrice.value = "";
+});
+ 
